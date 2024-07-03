@@ -12,7 +12,7 @@ const getUsers = () => {
   });
 };
 
-const addUser = (name, email, password, rol_id) => {
+const addUser = (name, email, password, rol_id, bio, facultad_id) => {
   return new Promise((resolve, reject) => {
     if (password.length < 8) {
       return reject(new Error('La contraseña debe tener al menos 8 caracteres'));
@@ -29,8 +29,8 @@ const addUser = (name, email, password, rol_id) => {
       }
 
       pool.query(
-        'INSERT INTO users (nombre, email, password, rol_id) VALUES ($1, $2, $3, $4) RETURNING *',
-        [name, email, password, rol_id],
+        'INSERT INTO users (nombre, email, password, rol_id, bio, facultad_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+        [name, email, password, rol_id, bio, facultad_id],
         (error, results) => {
           if (error) {
             console.error('Error al añadir usuario:', error);
@@ -43,8 +43,7 @@ const addUser = (name, email, password, rol_id) => {
   });
 };
 
-
-const editUser = (id, name, email, password, rol_id) => {
+const editUser = (id, name, email, password, rol_id, bio, facultad_id) => {
   return new Promise((resolve, reject) => {
     if (!name || name.trim() === '') {
       return reject(new Error('El nombre no puede estar vacío'));
@@ -54,8 +53,8 @@ const editUser = (id, name, email, password, rol_id) => {
     }
 
     pool.query(
-      'UPDATE users SET nombre = $1, email = $2, password = $3, rol_id = $4 WHERE id = $5 RETURNING *',
-      [name, email, password, rol_id, id],
+      'UPDATE users SET nombre = $1, email = $2, password = $3, rol_id = $4, bio = $5, facultad_id = $6 WHERE id = $7 RETURNING *',
+      [name, email, password, rol_id, bio, facultad_id, id],
       (error, results) => {
         if (error) {
           console.error('Error al ejecutar la consulta:', error);
@@ -88,5 +87,5 @@ module.exports = {
   getUsers,
   addUser,
   editUser,
-  deleteUser
+  deleteUser,
 };

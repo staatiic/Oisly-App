@@ -21,7 +21,6 @@ const loginUser = async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
-
 const getUsers = async (req, res) => {
   try {
     const users = await userModel.getUsers();
@@ -32,10 +31,10 @@ const getUsers = async (req, res) => {
 };
 
 const addUser = async (req, res) => {
-  const { name, email, password, rol_id } = req.body;
+  const { name, email, password, rol_id, bio, facultad_id } = req.body;
 
   try {
-    const newUser = await userModel.addUser(name, email, password, rol_id);
+    const newUser = await userModel.addUser(name, email, password, rol_id, bio, facultad_id);
     res.status(201).json(newUser);
   } catch (error) {
     console.error('Error al añadir usuario:', error.message);
@@ -43,13 +42,12 @@ const addUser = async (req, res) => {
   }
 };
 
-
 const editUser = async (req, res) => {
   const { id } = req.params;
-  const { name, email, password, rol_id } = req.body;
+  const { name, email, password, rol_id, bio, facultad_id } = req.body;
 
   try {
-    const updatedUser = await userModel.editUser(id, name, email, password, rol_id);
+    const updatedUser = await userModel.editUser(id, name, email, password, rol_id, bio, facultad_id);
     res.status(200).json(updatedUser);
   } catch (error) {
     console.error('Error al editar usuario:', error.message);

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const jsonErrorHandler = require('./middleware/jsonErrorHandler');
 const userRoutes = require('./routes/userRoutes');
 const categoriaRoutes = require('./routes/categoriaRoutes');
 const facultadRoutes = require('./routes/facultadRoutes');
@@ -10,6 +11,7 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+app.use(jsonErrorHandler);
 
 // ruta d prueba 
 app.get("/", (req, res) => {
